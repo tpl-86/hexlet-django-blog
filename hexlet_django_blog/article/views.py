@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponse
 from django.views import View
+from hexlet_django_blog.article.models import Article
 
 
 class HomeView(View):
@@ -11,6 +11,12 @@ class HomeView(View):
     
     
 class IndexView(View):
-    def get(self, request, tags, article_id, *args, **kwargs):
-        return HttpResponse(
-            f'Статья номер {article_id}. Тег {tags}')
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(
+            request,
+            "articles/index.html",
+            context={
+                "articles":articles,
+            },
+        )
