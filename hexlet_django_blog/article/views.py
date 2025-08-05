@@ -1,8 +1,21 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from hexlet_django_blog.article.models import Article
+from .forms import ArticleForm
 
+
+class ArticleFormCreateView(View):
+    def get(self, request, *args, **kwargs):
+        form = ArticleForm()
+        return render(request, 'articles/create.html', {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('articles')
+        return render(request, 'articles/create.html', {'form': form})
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):

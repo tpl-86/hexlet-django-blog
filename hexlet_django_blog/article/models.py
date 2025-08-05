@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+class ArticleComment(models.Model):
+    content = models.CharField("content", max_length=100)
+    
 class Article(models.Model):
     name = models.CharField(max_length=255)
     body = models.TextField()
